@@ -1,84 +1,83 @@
-# Vedan - Bug Bounty Toolkit 🛠️
+# Vedan v2.1 - Advanced Bug Bounty Toolkit 🛠️
 
-Vedan is a powerful and automated Bug Bounty Toolkit designed to simplify subdomain enumeration, HTTP probing, and XSS vulnerability scanning. It is built with simplicity and efficiency in mind, making it a great tool for bug bounty hunters, security researchers, and developers.
+**Vedan** is an automated Bug Bounty Toolkit designed for high-efficiency reconnaissance. Version 2.1 introduces advanced scanning capabilities including GF pattern filtering, secret detection, and JavaScript analysis, all while maintaining a balanced system load.
+
+> [!IMPORTANT]
+> **This tool is optimized for Linux environments ONLY.**
 
 ---
 
 ## Features ✨
-- **Subdomain Enumeration**: Uses `subfinder` and `amass` to discover subdomains.
-- **HTTP Probing**: Uses `httprobe` to find live HTTP/HTTPS servers.
-- **XSS Scanning**: Uses `waybackurls` and `kxss` to identify potential XSS vulnerabilities.
-- **Automated Workflow**: Combines multiple tools into a single, easy-to-use script.
-- **Output Organization**: Saves all results in a dedicated `~/vedan/` directory.
+- **Subdomain Enumeration**: Discovery using `subfinder` with balanced threading.
+- **HTTP Probing**: Identifying live hosts with `httpx`.
+- **URL Gathering**: Combined historical data from `gau` and `waybackurls`.
+- **URL Cleaning**: Deduplication and cleanup using `uro`.
+- **Vulnerability Filtering**: Automated pattern matching for XSS, SQLi, SSRF, and LFI using `gf`.
+- **JavaScript Recon**: Extraction of JS files for endpoint analysis.
+- **Secret Detection**: Pattern-based scanning for API keys and sensitive tokens.
+- **Vulnerability Scanning**: Template-based scanning with `nuclei`.
+- **Visual Capture**: Automated screenshots of all live hosts.
 
 ---
 
-## Environment 
- - **This Tool is tested only in Kali and Parrot**
-
- 
 ## Installation 🛠️
 
 ### Prerequisites
-Before using Vedan, ensure you have the following installed:
-- **Go** (to install Go-based tools)
-- **Git** (to clone the repository)
+Ensure you are on a **Linux** environment with the following tools installed:
+- `subfinder`, `httpx`, `gau`, `waybackurls`, `gf`, `uro`, `nuclei`, `grep`
 
-### Step 1: Clone the Repository
-```bash
-git clone https://github.com/devkumar-swipe/vedan.git
-```
+### Setup
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/devkumar-swipe/vedan.git
+   ```
+2. Make the script executable:
+   ```bash
+   chmod +x vedan.sh
+   ```
 
-### Step 2: Make the Script Executable
-```bash
-chmod +x vedan.sh
-```
-## Options
--d, --domain: Specify the target domain (e.g., example.com).
+---
 
--h, --help: Display the help menu.
-
-Usage 🚀
-Basic Usage
+## Usage 🚀
 Run the script with a target domain:
 ```bash
-./vedan.sh -d example.com
+./vedan.sh example.com
 ```
-**It will automatically download all dependencies which are required and executed.**
-![image](https://github.com/user-attachments/assets/1301b22f-ec76-4a06-b7b0-98278efd492a)
 
-### Output 📂
-All output files are saved in the ~/vedan/ directory. Here’s an example of the files generated:
+### Configuration
+- **Threads**: Defaulted to `10` to ensure stable CPU performance.
+- **Output**: Results are organized by domain in `~/vedan/`.
 
-~/vedan/
-├── domains_subfinder_example.com.txt
-├── domains_example.com.txt
-├── domains_example.com_resolved.txt
-├── xss_example.com.txt
-└── bug_bounty_tool.log
+---
 
-### Dependencies 📦
-The following tools are required for Vedan to work:
-subfinder
-amass
-httprobe
-waybackurls
-kxss
-filter-resolved
-Refer to the requirements.txt file for more details.
+## Output 📂
+Results are stored in structured directories:
+```text
+~/vedan/example.com/
+├── subs.txt            # Unique subdomains
+├── alive.txt           # Live hosts
+├── urls.txt            # Processed & cleaned URLs
+├── params.txt          # URLs with parameters
+├── js_files.txt        # Discovered JavaScript files
+├── secrets.txt         # Potential sensitive findings
+├── vulns/              # Categorized GF patterns (XSS, SQLi, etc.)
+├── screenshots/        # Visual evidence
+└── nuclei_results.txt  # Nuclei scan output
+```
 
-### Support and Contact 📧
-If you have any questions, suggestions, or need support, feel free to reach out:
-For collaboration feel free to contact.
+---
 
+## Dependencies 📦
+- [subfinder](https://github.com/projectdiscovery/subfinder) | [httpx](https://github.com/projectdiscovery/httpx) | [nuclei](https://github.com/projectdiscovery/nuclei)
+- [gau](https://github.com/lc/gau) | [waybackurls](https://github.com/tomnomnom/waybackurls)
+- [gf](https://github.com/tomnomnom/gf) | [uro](https://github.com/s0md3v/uro)
+
+---
+
+## Support and Contact 📧
 Email: devkumarmahto204@outlook.com
 
-### License 📄
-This project is licensed under the MIT License. See the LICENSE file for details.
-
-### Acknowledgments 🙏
-Thanks to the creators of subfinder, amass, httprobe, waybackurls, and kxss for their amazing tools.
-
-Special thanks to the bug bounty community for their support and inspiration.
+## License 📄
+This project is licensed under the MIT License.
 
 Happy Hunting! 🐛🔍
